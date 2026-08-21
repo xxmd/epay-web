@@ -2,6 +2,7 @@ import type {BaseEntity} from '@/api/common';
 import {createCrudApi} from '@/api/crud';
 import type {FileEntity} from '@/api/resource/file';
 import type {FileValue} from '@/components/upload/FileUpload';
+import request from "@/utils/request.ts";
 
 export interface Application extends BaseEntity {
     iconFile: FileEntity | null;
@@ -27,10 +28,18 @@ export interface ApplicationSearchForm {
     enabled?: boolean | null;
 }
 
+export interface SimpleApplication {
+    id: number;
+    name: string;
+}
+
 const BASE_PATH = '/pay/application';
 
 const crud = createCrudApi<Application, ApplicationForm, ApplicationSearchForm>(BASE_PATH);
 
 export default {
     ...crud,
+    findAll(): Promise<SimpleApplication[]> {
+        return request.get(`${BASE_PATH}/findAll`);
+    },
 };

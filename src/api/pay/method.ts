@@ -1,5 +1,6 @@
 import type {BaseEntity} from "@/api/common";
 import {createCrudApi} from "@/api/crud";
+import request from "@/utils/request.ts";
 
 export interface Method extends BaseEntity {
     label: string;
@@ -19,14 +20,18 @@ export interface MethodSearchForm {
     enabled?: boolean | null;
 }
 
+export interface SimpleMethod {
+    id: number;
+    label: string;
+}
+
 const BASE_PATH = '/pay/method';
 
 const crud = createCrudApi<Method, MethodForm, MethodSearchForm>(BASE_PATH);
 
 export default {
     ...crud,
-    async findAll(): Promise<Method[]> {
-        const res = await crud.read({}, {page: 1, size: 1000});
-        return res.content;
+    findAll(): Promise<SimpleMethod[]> {
+        return request.get(`${BASE_PATH}/findAll`);
     },
 }

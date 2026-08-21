@@ -2,7 +2,7 @@ import {type FC, useEffect, useMemo, useState} from 'react';
 import {Form, Input, InputNumber, message, Radio, Select, Table, Tag} from 'antd';
 import merchantApi, {type Merchant, type MerchantForm, type MerchantSearchForm} from '../../../api/pay/merchant';
 import platformApi, {type SimplePlatform} from '../../../api/pay/platform';
-import methodApi, {type Method} from '@/api/pay/method';
+import methodApi, {type SimpleMethod} from '@/api/pay/method';
 import {SearchForm} from '@/components/crud/SearchForm';
 import {Toolbar} from '@/components/crud/Toolbar';
 import {CrudModal} from '@/components/crud/CrudModal';
@@ -14,7 +14,7 @@ import {auditColumns} from '@/components/crud/AuditColumns';
 const MerchantManagement: FC = () => {
     const [searchForm] = Form.useForm<MerchantSearchForm>();
     const [platforms, setPlatforms] = useState<SimplePlatform[]>([]);
-    const [methods, setMethods] = useState<Method[]>([]);
+    const [methods, setMethods] = useState<SimpleMethod[]>([]);
 
     const platformOptions = useMemo(
         () => platforms.map(p => ({label: p.name, value: p.id})),
