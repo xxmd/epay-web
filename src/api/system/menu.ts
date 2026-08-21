@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import type {BaseEntity} from "@/api/common";
+import type {BaseEntity, Result} from "@/api/common";
 import {createCrudApi} from "@/api/crud";
 
 export enum MenuType {
@@ -43,7 +43,7 @@ const crud = createCrudApi<Menu, MenuForm, MenuSearchForm>(BASE_PATH);
 
 export default {
     ...crud,
-    findAll(): Promise<Menu[]> {
+    findAll(): Promise<Result<Menu[]>> {
         return request.get(`${BASE_PATH}/findAll`);
     },
 }

@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import type {Menu} from "@/api/system/menu";
-import type {BaseEntity} from "@/api/common";
+import type {BaseEntity, Result} from "@/api/common";
 import {createCrudApi} from '@/api/crud';
 
 export interface Role extends BaseEntity {
@@ -31,7 +31,7 @@ const crud = createCrudApi<Role, RoleForm, RoleSearchForm>(BASE_PATH);
 
 export default {
     ...crud,
-    findAll(): Promise<SimpleRole[]> {
+    findAll(): Promise<Result<SimpleRole[]>> {
         return request.get(`${BASE_PATH}/findAll`);
     },
 }

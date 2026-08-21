@@ -1,4 +1,4 @@
-import type {BaseEntity} from '@/api/common';
+import type {BaseEntity, Result} from '@/api/common';
 import {createCrudApi} from '@/api/crud';
 import type {FileEntity} from '@/api/resource/file';
 import type {FileValue} from '@/components/upload/FileUpload';
@@ -39,7 +39,7 @@ const crud = createCrudApi<Application, ApplicationForm, ApplicationSearchForm>(
 
 export default {
     ...crud,
-    findAll(): Promise<SimpleApplication[]> {
+    findAll(): Promise<Result<SimpleApplication[]>> {
         return request.get(`${BASE_PATH}/findAll`);
     },
 };

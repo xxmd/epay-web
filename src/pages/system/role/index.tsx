@@ -58,8 +58,8 @@ const RoleManagement: FC = () => {
     });
 
     function requestMenuTree() {
-        menuApi.findAll().then(menus => {
-            setMenuTreeData(menus);
+        menuApi.findAll().then(result => {
+            setMenuTreeData(result.data);
         }).catch(error => {
             void message.error('请求菜单数据失败: ' + error);
         });

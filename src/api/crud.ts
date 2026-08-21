@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import type {Pageable, PagedModel, Sort} from "@/api/common";
+import type {Pageable, PagedModel, Result, Sort} from "@/api/common";
 
 interface CrudForm {
     id?: number;
@@ -11,10 +11,10 @@ export function createCrudApi<
     S
 >(basePath: string) {
     return {
-        create(data: F): Promise<void> {
+        create(data: F): Promise<Result<void>> {
             return request.post(`${basePath}/create`, data);
         },
-        read(data: S, pageable: Pageable, sorts?: Sort[]): Promise<PagedModel<T>> {
+        read(data: S, pageable: Pageable, sorts?: Sort[]): Promise<Result<PagedModel<T>>> {
             return request.post(`${basePath}/read`, data, {
                 params: {
                     page: pageable.page - 1,
@@ -24,10 +24,10 @@ export function createCrudApi<
                 paramsSerializer: {indexes: null},
             });
         },
-        update(data: F): Promise<void> {
+        update(data: F): Promise<Result<void>> {
             return request.post(`${basePath}/update`, data);
         },
-        delete(ids: number[]): Promise<void> {
+        delete(ids: number[]): Promise<Result<void>> {
             return request.post(`${basePath}/delete`, ids);
         },
     };

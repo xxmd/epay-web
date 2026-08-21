@@ -1,14 +1,14 @@
 import type {FormInstance} from 'antd';
-import type {Pageable, PagedModel, Sort} from '@/api/common';
+import type {Pageable, PagedModel, Result, Sort} from '@/api/common';
 import {usePagedTable} from '@/hooks/usePagedTable';
 import {useCrudModal} from '@/hooks/useCrudModal';
 import {useBatchDelete} from '@/hooks/useBatchDelete';
 
 interface CrudApi<T, F, S> {
-    read: (search: S, pageable: Pageable, sorts?: Sort[]) => Promise<PagedModel<T>>;
-    create: (data: F) => Promise<void>;
-    update: (data: F) => Promise<void>;
-    delete: (ids: number[]) => Promise<void>;
+    read: (search: S, pageable: Pageable, sorts?: Sort[]) => Promise<Result<PagedModel<T>>>;
+    create: (data: F) => Promise<Result<void>>;
+    update: (data: F) => Promise<Result<void>>;
+    delete: (ids: number[]) => Promise<Result<void>>;
 }
 
 interface CrudPageOptions<T, F extends {id?: number}, S> {

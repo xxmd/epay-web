@@ -5,7 +5,7 @@ export function useEnum(name: EnumName): EnumOption[] {
     const [options, setOptions] = useState<EnumOption[]>([]);
 
     useEffect(() => {
-        enumApi.get(name).then(setOptions);
+        enumApi.get(name).then(result => setOptions(result.data));
     }, [name]);
 
     return options;

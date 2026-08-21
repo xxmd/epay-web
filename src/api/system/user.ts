@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import type {Role} from "@/api/system/role";
-import type {BaseEntity} from "@/api/common";
+import type {BaseEntity, Result} from "@/api/common";
 import {createCrudApi} from '@/api/crud';
 
 export interface User extends BaseEntity {
@@ -44,16 +44,16 @@ const crud = createCrudApi<User, UserForm, UserSearchForm>(BASE_PATH);
 
 export default {
     ...crud,
-    get(): Promise<User> {
+    get(): Promise<Result<User>> {
         return request.get(BASE_PATH);
     },
-    findByUsername(username: string): Promise<User | null> {
+    findByUsername(username: string): Promise<Result<User | null>> {
         return request.get(`${BASE_PATH}/findByUsername/${username}`);
     },
-    updateProfile(data: UserProfileForm): Promise<void> {
+    updateProfile(data: UserProfileForm): Promise<Result<void>> {
         return request.post(`${BASE_PATH}/updateProfile`, data);
     },
-    updatePassword(data: UserPasswordForm): Promise<void> {
+    updatePassword(data: UserPasswordForm): Promise<Result<void>> {
         return request.post(`${BASE_PATH}/updatePassword`, data);
     },
 }

@@ -1,4 +1,4 @@
-import type {BaseEntity, Pageable, PagedModel, Sort} from "@/api/common";
+import type {BaseEntity, Pageable, PagedModel, Result, Sort} from "@/api/common";
 import request from "@/utils/request.ts";
 
 export interface FileEntity extends BaseEntity {
@@ -19,7 +19,7 @@ export function getFileUrl(path: string): string {
 
 
 export default {
-    read(data: FileSearchForm, pageable: Pageable, sorts?: Sort[]): Promise<PagedModel<FileEntity>> {
+    read(data: FileSearchForm, pageable: Pageable, sorts?: Sort[]): Promise<Result<PagedModel<FileEntity>>> {
         return request.post(`${BASE_PATH}/read`, data, {
             params: {
                 page: pageable.page - 1,

@@ -1,8 +1,9 @@
 import {useCallback, useState} from 'react';
 import {message} from 'antd';
+import type {Result} from '@/api/common';
 
 interface BatchDeleteOptions {
-    deleteFn: (ids: number[]) => Promise<void>;
+    deleteFn: (ids: number[]) => Promise<Result<void>>;
     onSuccess?: (ids: number[]) => void;
 }
 

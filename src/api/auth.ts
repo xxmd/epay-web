@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import type {Result} from '@/api/common';
 
 export interface LoginForm {
     username: string;
@@ -13,7 +14,7 @@ export interface LoginResponse {
 const BASE_PATH = '/auth';
 
 export default {
-    login(data: LoginForm): Promise<LoginResponse> {
+    login(data: LoginForm): Promise<Result<Record<string, unknown>>> {
         return request.post(`${BASE_PATH}/login`, data);
     }
 };

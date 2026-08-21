@@ -1,10 +1,10 @@
 import {useCallback, useEffect, useState, type Key} from 'react';
 import type {FormInstance} from 'antd';
 import type {SorterResult, TablePaginationConfig} from 'antd/es/table/interface';
-import type {Pageable, PagedModel, Sort} from '@/api/common';
+import type {Pageable, PagedModel, Result, Sort} from '@/api/common';
 
 interface PagedTableOptions<T, S> {
-    read: (search: S, pageable: Pageable, sorts?: Sort[]) => Promise<PagedModel<T>>;
+    read: (search: S, pageable: Pageable, sorts?: Sort[]) => Promise<Result<PagedModel<T>>>;
     searchForm: FormInstance<S>;
 }
 
@@ -19,7 +19,8 @@ export function usePagedTable<T, S>({read, searchForm}: PagedTableOptions<T, S>)
 
     const requestTableData = useCallback((page = 1, pageSize = 10, currentSorts?: Sort[]) => {
         read(searchForm.getFieldsValue(), {page, size: pageSize}, currentSorts ?? sorts)
-            .then(pagedData => {
+            .then(result => {
+                const pagedData = result.data;
                 setData(pagedData.content);
                 setPagination({
                     current: pagedData.page.number + 1,

@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import type {Result} from '@/api/common';
 
 export interface EnumOption {
     value: string;
@@ -13,7 +14,7 @@ export enum EnumName {
 const BASE_PATH = '/enum';
 
 export default {
-    get(name: EnumName): Promise<EnumOption[]> {
+    get(name: EnumName): Promise<Result<EnumOption[]>> {
         return request.get(`${BASE_PATH}/${name}`);
     },
 };

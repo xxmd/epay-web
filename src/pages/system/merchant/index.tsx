@@ -47,8 +47,8 @@ const MerchantManagement: FC = () => {
     );
 
     function requestRoles() {
-        roleApi.findAll().then(roles => {
-            setRoles(roles);
+        roleApi.findAll().then(result => {
+            setRoles(result.data);
         }).catch(error => {
             void message.error('请求角色数据失败: ' + error);
         });

@@ -16,11 +16,14 @@ import {CrudLayout} from '@/components/crud/CrudLayout';
 import {createActionColumn} from '@/components/crud/ActionColumn';
 import {useCrudPage} from '@/hooks/useCrudPage';
 import {auditColumns} from '@/components/crud/AuditColumns';
+import {usePermission} from '@/hooks/usePermission';
 
 const OrderManagement: FC = () => {
     const [searchForm] = Form.useForm<OrderSearchForm>();
     const [applications, setApplications] = useState<SimpleApplication[]>([]);
     const [methods, setMethods] = useState<SimpleMethod[]>([]);
+    const {hasPermission} = usePermission();
+    const canDelete = hasPermission('pay:order:delete');
 
     const applicationOptions = useMemo(
         () => applications.map(a => ({label: a.name, value: a.id})),
@@ -34,12 +37,12 @@ const OrderManagement: FC = () => {
 
     useEffect(() => {
         applicationApi.findAll()
-            .then(res => setApplications(res))
+            .then(result => setApplications(result.data))
             .catch(error => {
                 void message.error('请求应用数据失败: ' + error);
             });
         methodApi.findAll()
-            .then(setMethods)
+            .then(result => setMethods(result.data))
             .catch(error => {
                 void message.error('请求支付方式数据失败: ' + error);
             });
@@ -90,7 +93,7 @@ const OrderManagement: FC = () => {
 
     const columns = [
         {
-            title: '订单号',
+            title: '订单编号',
             dataIndex: 'orderNumber',
             key: 'orderNumber',
         },
@@ -169,7 +172,7 @@ const OrderManagement: FC = () => {
     return (
         <CrudLayout>
             <SearchForm form={searchForm} onSearch={refreshTableData} onReset={reset}>
-                <Form.Item name="orderNumber" label="订单号">
+                <Form.Item name="orderNumber" label="订单编号">
                     <Input allowClear/>
                 </Form.Item>
                 <Form.Item name="productName" label="商品名称">
@@ -207,10 +210,10 @@ const OrderManagement: FC = () => {
                 loading={loading}
                 columns={columns}
                 dataSource={data}
-                rowSelection={{
+                rowSelection={canDelete ? {
                     selectedRowKeys,
                     onChange: setSelectedRowKeys,
-                }}
+                } : undefined}
                 pagination={{
                     current: pagination.current,
                     pageSize: pagination.pageSize,

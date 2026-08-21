@@ -24,21 +24,8 @@ const Login: React.FC = () => {
             } else {
                 message.error(res.message || '登录失败，请稍后重试');
             }
-        } catch (err: unknown) {
-            if (err && typeof err === 'object' && 'code' in err) {
-                const axiosErr = err as { code?: string; response?: { status: number } };
-                if (axiosErr.code === 'ECONNABORTED') {
-                    message.error('请求超时，请检查网络后重试');
-                } else if (axiosErr.response?.status === 500) {
-                    message.error('服务器异常，请稍后重试');
-                } else if (axiosErr.response?.status === 403) {
-                    message.error('没有访问权限，请联系管理员');
-                } else {
-                    message.error('网络请求失败，请稍后重试');
-                }
-            } else {
-                message.error('网络请求失败，请稍后重试');
-            }
+        } catch {
+            message.error('登录失败，请稍后重试');
         } finally {
             setLoading(false);
         }

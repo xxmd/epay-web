@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react';
+import {Flex} from 'antd';
 
 interface CrudLayoutProps {
     children: ReactNode;
@@ -6,8 +7,8 @@ interface CrudLayoutProps {
 
 export function CrudLayout({children}: CrudLayoutProps) {
     return (
-        <div style={{display: 'flex', flexDirection: 'column', gap: 16}}>
+        <Flex vertical gap="medium">
             {children}
-        </div>
+        </Flex>
     );
 }

@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import type {Result} from '@/api/common';
 
 const BASE_PATH = '/register';
 
@@ -21,10 +22,10 @@ export interface EmailRegisterResponse {
 }
 
 export default {
-    sendEmailCaptcha(email: string): Promise<SendCaptchaResponse> {
+    sendEmailCaptcha(email: string): Promise<Result<void>> {
         return request.get(`${BASE_PATH}/sendEmailCaptcha/${email}`);
     },
-    byEmail(data: EmailRegisterForm): Promise<EmailRegisterResponse> {
+    byEmail(data: EmailRegisterForm): Promise<Result<void>> {
         return request.post(`${BASE_PATH}/byEmail`, data);
     },
 };

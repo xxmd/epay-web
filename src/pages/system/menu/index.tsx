@@ -44,8 +44,8 @@ const MenuManagement: FC = () => {
     const menuTypeOptions = useEnum(EnumName.MenuType);
 
     function requestTableData() {
-        menuApi.findAll().then(menus => {
-            setData(menus);
+        menuApi.findAll().then(result => {
+            setData(result.data);
         }).catch(error => {
             void message.error('请求菜单数据失败: ' + error);
         }).finally(() => {

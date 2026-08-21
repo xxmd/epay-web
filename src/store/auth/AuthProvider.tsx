@@ -49,7 +49,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
         (async () => {
             if (state.token) {
                 try {
-                    const user = await userApi.get();
+                    const result = await userApi.get();
+                    const user = result.data;
                     setState(prev => ({
                         ...prev,
                         user,
@@ -85,7 +86,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
     const login = useCallback(async (token: string, redirectUrl?: string) => {
         setToken(token);
         try {
-            const user = await userApi.get();
+            const result = await userApi.get();
+            const user = result.data;
             setState({
                 token,
                 user,
@@ -115,7 +117,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}
 
     const refreshUser = useCallback(async () => {
         try {
-            const user = await userApi.get();
+            const result = await userApi.get();
+            const user = result.data;
             setState(prev => ({
                 ...prev,
                 user,

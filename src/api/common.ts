@@ -25,3 +25,10 @@ export interface PagedModel<T> {
         totalPages: number;
     };
 }
+
+export interface Result<T> {
+    success: boolean;
+    reason?: string;
+    message?: string;
+    data: T;
+}

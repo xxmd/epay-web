@@ -122,7 +122,8 @@ export const Header: React.FC = () => {
                         {
                             validator: async (_, value) => {
                                 if (!value) return;
-                                const existingUser = await userApi.findByUsername(value);
+                                const result = await userApi.findByUsername(value);
+                                const existingUser = result.data;
                                 if (existingUser && existingUser.id !== user?.id) {
                                     return Promise.reject('该用户名已存在');
                                 }

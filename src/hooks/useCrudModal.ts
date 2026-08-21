@@ -1,9 +1,10 @@
 import {useCallback, useState} from 'react';
 import {Form, message} from 'antd';
+import type {Result} from '@/api/common';
 
 interface CrudModalOptions<F extends { id?: number }> {
-    create: (data: F) => Promise<void>;
-    update: (data: F) => Promise<void>;
+    create: (data: F) => Promise<Result<void>>;
+    update: (data: F) => Promise<Result<void>>;
     onSuccess?: () => void;
     transform?: (values: F) => F;
 }
@@ -42,14 +43,24 @@ export function useCrudModal<F extends { id?: number }>({create, update, onSucce
         try {
             const formData = transform ? transform(values) : values;
             if (formData.id) {
-                await update(formData);
-                void message.success('修改成功');
+                const result = await update(formData);
+                if (result.success) {
+                    void message.success('修改成功');
+                    setModalOpen(false);
+                    onSuccess?.();
+                } else {
+                    void message.error(result.message || '修改失败');
+                }
             } else {
-                await create(formData);
-                void message.success('新增成功');
+                const result = await create(formData);
+                if (result.success) {
+                    void message.success('新增成功');
+                    setModalOpen(false);
+                    onSuccess?.();
+                } else {
+                    void message.error(result.message || '新增失败');
+                }
             }
-            setModalOpen(false);
-            onSuccess?.();
         } catch (error) {
             console.error(error);
         } finally {

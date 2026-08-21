@@ -1,4 +1,4 @@
-import type {BaseEntity} from "@/api/common";
+import type {BaseEntity, Result} from "@/api/common";
 import {createCrudApi} from "@/api/crud";
 import request from "@/utils/request.ts";
 
@@ -31,7 +31,7 @@ const crud = createCrudApi<Method, MethodForm, MethodSearchForm>(BASE_PATH);
 
 export default {
     ...crud,
-    findAll(): Promise<SimpleMethod[]> {
+    findAll(): Promise<Result<SimpleMethod[]>> {
         return request.get(`${BASE_PATH}/findAll`);
     },
 }

@@ -27,16 +27,16 @@ const MerchantManagement: FC = () => {
     );
 
     function requestPlatforms() {
-        platformApi.findAll().then(res => {
-            setPlatforms(res);
+        platformApi.findAll().then(result => {
+            setPlatforms(result.data);
         }).catch(error => {
             void message.error('请求平台数据失败: ' + error);
         });
     }
 
     function requestMethods() {
-        methodApi.findAll().then(methods => {
-            setMethods(methods);
+        methodApi.findAll().then(result => {
+            setMethods(result.data);
         }).catch(error => {
             void message.error('请求支付方式数据失败: ' + error);
         });
@@ -112,6 +112,11 @@ const MerchantManagement: FC = () => {
             render: (enabled: boolean) => (
                 <Tag color={enabled ? 'green' : 'red'}>{enabled ? '启用' : '禁用'}</Tag>
             ),
+        },
+        {
+            title: '顺序',
+            dataIndex: 'sort',
+            key: 'sort',
         },
         ...auditColumns,
         createActionColumn<Merchant>({
