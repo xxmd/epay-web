@@ -41,7 +41,7 @@ const OrderManagement: FC = () => {
             .catch(error => {
                 void message.error('请求应用数据失败: ' + error);
             });
-        methodApi.findAll()
+        methodApi.findAvailable()
             .then(result => setMethods(result.data))
             .catch(error => {
                 void message.error('请求支付方式数据失败: ' + error);

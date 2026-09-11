@@ -34,4 +34,7 @@ export default {
     findAll(): Promise<Result<SimpleMethod[]>> {
         return request.get(`${BASE_PATH}/findAll`);
     },
+    findAvailable(): Promise<Result<SimpleMethod[]>> {
+        return request.get(`${BASE_PATH}/findAvailable`);
+    },
 }
